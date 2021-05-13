@@ -74,5 +74,23 @@ app.get('/compute/',function(req,res){
         });
 });
 
+app.get('/clear/',function(req,res){
+  const python = spawn('python', ['./controllers/game_recognition_model/clear.py']);
+  var dataToSend;
+  python.stdout.on('data', function (data) {
+      console.log('Pipe data from python script ...');
+      //console.log(data)
+      dataToSend = data.toString();
+     });
+     python.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+    });  
+     python.on('close', (code) => {
+      console.log(`child process close all stdio with code ${code}`);
+      // send data to browser
+      res.send(dataToSend)
+      });
+});
+
 
 app.listen(3000);
