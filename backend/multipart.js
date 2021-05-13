@@ -57,7 +57,7 @@ app.get('/uploads/:upload', function (req, res){
 });
 
 app.get('/compute/',function(req,res){
-    const python = spawn('python3', ['./controllers/game_recognition_model/integrated.py']);
+    const python = spawn('python', ['./controllers/game_recognition_model/integrated.py']);
     var dataToSend;
     python.stdout.on('data', function (data) {
         console.log('Pipe data from python script ...');
